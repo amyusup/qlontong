@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import InputBorderedBottom from '../components/InputBorderedBottom';
 
-export default function Login({navigation}) {
+export default function Masuk({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const inputPassword = React.useRef();
@@ -21,7 +21,7 @@ export default function Login({navigation}) {
           keyType="next"
           onSubmit={() => inputPassword.current.focus()}
           icon="mail"
-          placeholder="Enter your e-mail"
+          placeholder="Email"
           value={email}
           onChange={(text) => setEmail(text)}
           style={{marginVertical: 10}}
@@ -33,7 +33,7 @@ export default function Login({navigation}) {
           keyType="done"
           // onSubmit={_onSubmit}
           icon="lock"
-          placeholder="Enter your password"
+          placeholder="Password"
           value={password}
           onChange={(text) => setPassword(text)}
           secureTextEntry={true}
@@ -44,8 +44,8 @@ export default function Login({navigation}) {
           <Text style={{color: 'white'}}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, {backgroundColor: '#eee'}]}
-        onPress={()=>navigation.navigate('Register')}>
-          <Text style={{color: 'black'}}>Register</Text>
+        onPress={()=>navigation.navigate('Daftar')}>
+          <Text style={{color: 'black'}}>Daftar</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

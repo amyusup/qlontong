@@ -1,7 +1,6 @@
 import React from 'react';
 import {TextInput, View, Dimensions, StyleSheet} from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
-// import color from '../../../styles/constant';
 const index = (props) => {
   const {placeholder, value, onChange, icon,style, inputRef, keyType, onSubmit,  ...input} = props;
   const [onFocus, setFocus] = React.useState(false);

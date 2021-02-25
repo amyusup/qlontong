@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import InputBorderedBottom from '../components/InputBorderedBottom';
 
-export default function Register({navigation}) {
+export default function Daftar({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const inputPassword = React.useRef();
@@ -17,13 +17,13 @@ export default function Register({navigation}) {
     <>
       <ScrollView style={styles.container}>
         <View style={styles.registerCard}>
-          <Text style={styles.title}>Register</Text>
+          <Text style={styles.title}>Daftar</Text>
      
           <InputBorderedBottom
             keyType="next"
             onSubmit={() => inputPassword.current.focus()}
             icon="user"
-            placeholder="Enter your name"
+            placeholder="Nama Lengkap"
             value={email}
             onChange={(text) => setEmail(text)}
             style={{marginVertical: 10}}
@@ -33,7 +33,7 @@ export default function Register({navigation}) {
             keyType="next"
             onSubmit={() => inputPassword.current.focus()}
             icon="mail"
-            placeholder="Enter your e-mail"
+            placeholder="Email"
             value={email}
             onChange={(text) => setEmail(text)}
             style={{marginVertical: 10}}
@@ -45,14 +45,14 @@ export default function Register({navigation}) {
             keyType="done"
             // onSubmit={_onSubmit}
             icon="lock"
-            placeholder="Enter your password"
+            placeholder="Password"
             value={password}
             onChange={(text) => setPassword(text)}
             secureTextEntry={true}
             style={{marginVertical: 10}}
           />
           <Text>
-            Already have account ? <Text style={{color: '#0099ff'}} onPress={()=>navigation.navigate('Login')}>Login</Text>
+            Sudah memiliki akun ? <Text style={{color: '#0099ff'}} onPress={()=>navigation.navigate('Login')}>Masuk</Text>
           </Text>
 
           <TouchableOpacity style={[styles.button, {backgroundColor: '#eee'}]}>
