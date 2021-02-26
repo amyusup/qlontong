@@ -11,12 +11,23 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
 
+
 export default function Pesanan({navigation}) {
   return (
     <View style={styles.container}>
       <ScrollView style={{marginBottom: 100, marginTop: 10}}>
-        <View style={styles.card}>
-        <Text style={{textAlign:'right', fontWeight:'bold'}}>#QLONTONG-1</Text>
+        <TouchableOpacity
+          style={styles.card}
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('DetailPesanan')}>
+          <View style={[styles.row,{justifyContent:'space-between', marginBottom:10}]}>
+            <Text style={{fontWeight: 'bold'}}>
+              Beli1
+            </Text>
+            <Text style={{fontWeight: 'bold'}}>
+              #QLONTONG-1
+            </Text>
+          </View>
           <View style={styles.row}>
             <View style={styles.images}>
               <Text>gambar</Text>
@@ -33,12 +44,14 @@ export default function Pesanan({navigation}) {
                   padding: 10,
                   borderRadius: 10,
                 }}>
-                <Text style={{color: 'white'}}>Dikirim</Text>
+                <Text style={{color: 'white'}}>Dikemas</Text>
               </View>
             </View>
           </View>
-          
-        </View>
+          <Text style={{textAlign: 'center', marginTop: 10, color: 'gray'}}>
+            dan 2 produk lainnya <Icons name="arrow-down" />
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

@@ -10,7 +10,7 @@ import {
 import InputBorderedBottom from '../components/InputBorderedBottom';
 import Icons from 'react-native-vector-icons/Feather';
 
-export default function TambahProduk({navigation}) {
+export default function EditProduk({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const inputPassword = React.useRef();

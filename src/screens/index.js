@@ -5,6 +5,11 @@ import Pesanan from './Pesanan'
 import Akun from './Akun'
 import EditAkun from './EditAkun'
 import TambahProduk from './TambahProduk'
+import EditProduk from './EditProduk'
+import DetailPesanan from './DetailPesanan'
+import PesananSaya from './PesananSaya'
+import Keranjang from './Keranjang'
+import Beranda from './Beranda'
 
 export{
     Login,
@@ -13,5 +18,10 @@ export{
     Pesanan,
     Akun,
     EditAkun,
-    TambahProduk
+    TambahProduk,
+    DetailPesanan,
+    EditProduk,
+    PesananSaya,
+    Keranjang,
+    Beranda
 }
