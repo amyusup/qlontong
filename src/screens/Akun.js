@@ -52,7 +52,6 @@ export default function Akun({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    // marginTop: 20,
     paddingTop: 10,
     backgroundColor: 'white',
     height: Dimensions.get('screen').height,

@@ -5,11 +5,9 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
-  FlatList,
   TouchableOpacity,
   Image,
 } from 'react-native';
-import Icons from 'react-native-vector-icons/Feather';
 
 export default function DetailPesanan({navigation}) {
   return (
@@ -48,7 +46,6 @@ export default function DetailPesanan({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    // marginTop: 20,
     paddingTop: 10,
     backgroundColor: 'white',
     height: Dimensions.get('screen').height,

@@ -16,19 +16,19 @@ export default function Beranda({navigation}) {
         <View style={styles.content}>
           <Card />
         </View>
-        <View style={{margin: 5, width: '47%'}}>
+        <View style={styles.content}>
           <Card />
         </View>
-        <View style={{margin: 5, width: '47%'}}>
+        <View style={styles.content}>
           <Card />
         </View>
-        <View style={{margin: 5, width: '47%'}}>
+        <View style={styles.content}>
           <Card />
         </View>
-        <View style={{margin: 5, width: '47%'}}>
+        <View style={styles.content}>
           <Card />
         </View>
-        <View style={{margin: 5, width: '47%'}}>
+        <View style={styles.content}>
           <Card />
         </View>
       </ScrollView>

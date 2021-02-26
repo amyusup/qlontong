@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Dimensions, Text} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import CardPesanan from '../components/CardPesanan'
+import CardPesanan from '../components/CardPesanan';
 
 const Dikemas = ({navigation}) => (
   <CardPesanan navigator={() => navigation.navigate('DetailPesanan')} />
@@ -23,7 +23,7 @@ export default function PesananSayaa({navigation}) {
   ]);
 
   const renderScene = SceneMap({
-    dikemas: ()=><Dikemas navigation={navigation} />,
+    dikemas: () => <Dikemas navigation={navigation} />,
     dikirim: SecondRoute,
     selesai: SecondRoute,
     batal: SecondRoute,
@@ -35,16 +35,15 @@ export default function PesananSayaa({navigation}) {
       onIndexChange={setIndex}
       initialLayout={initialLayout}
       renderTabBar={(props) => (
-        <TabBar {...props} style={{backgroundColor: 'white'}} 
-        renderLabel={({route, color}) => (
-            <Text style={{ color: 'black' }}>
-              {route.title}
-            </Text>
+        <TabBar
+          {...props}
+          style={{backgroundColor: 'white'}}
+          renderLabel={({route}) => (
+            <Text style={{color: 'black'}}>{route.title}</Text>
           )}
-          indicatorStyle={{ backgroundColor: '#0099ff', height: 2 }}
+          indicatorStyle={{backgroundColor: '#0099ff', height: 2}}
         />
       )}
-      
     />
   );
 }
