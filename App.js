@@ -2,6 +2,9 @@ import SplashScreen from 'react-native-splash-screen';
 import React from 'react';
 import {StatusBar} from 'react-native';
 import MainNavigator from './src';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/es/integration/react';
+import {store, persistor} from './src/redux/store';
 const App = () => {
   React.useEffect(() => {
     SplashScreen.hide();
@@ -9,7 +12,11 @@ const App = () => {
   return (
     <>
       <StatusBar translucent backgroundColor="white" barStyle="dark-content" />
-      <MainNavigator />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <MainNavigator />
+        </PersistGate>
+      </Provider>
     </>
   );
 };
