@@ -9,36 +9,56 @@ import {
   Image,
 } from 'react-native';
 
-export default function DetailPesanan({navigation}) {
+import {useDispatch, useSelector} from 'react-redux';
+import {getPesananDetail} from '../redux/actions/pesanan';
+import {imageURI} from '../utils';
+import CardPesanan from '../components/CardPesanan';
+
+export default function DetailPesanan({navigation, route}) {
+  const dispatch = useDispatch();
+  const {token} = useSelector((state) => state.auth);
+  const {pesananDetail} = useSelector((state) => state.pesanan);
+  const {kode, halaman} = route.params;
+  React.useState(() => {
+    dispatch(getPesananDetail(token, kode));
+  });
   return (
     <View style={styles.container}>
       <ScrollView style={{marginBottom: 100, marginTop: 10}}>
         <View style={styles.card}>
-          <View style={[styles.row,{justifyContent:'space-between'}]}>
-            <Text style={{fontWeight: 'bold'}}>Beli1</Text>
-            <Text style={{fontWeight: 'bold'}}>#QLONTONG-1</Text>
+          <View style={[styles.row, {justifyContent: 'space-between'}]}>
+            <Text style={{fontWeight: 'bold'}}>
+              {pesananDetail[0].nama_penjual}
+            </Text>
+            <Text style={{fontWeight: 'bold'}}>
+              #{pesananDetail[0].kode_pesanan}
+            </Text>
           </View>
-          <Text>08121212121</Text>
-          <Text>Jl.asdbasidasbbasasbdjkasj</Text>
-          <TouchableOpacity style={styles.card} onPress={()=>navigation.navigate('DetailProduk')} activeOpacity={0.8}>
-          <View style={styles.row}>
-            <View style={styles.images}>
-              <Text>gambar</Text>
-            </View>
-            <View style={styles.data}>
-              <Text style={{fontWeight: 'bold'}}>Minyak</Text>
-              <Text>Rp. 10.000</Text>
-              <Text>40</Text>
-            </View>
+          <Text>+62 {pesananDetail[0].no_hp}</Text>
+          <Text>{pesananDetail[0].alamat}</Text>
+          <View style={{marginVertical: 50}}>
+            <CardPesanan
+              item={pesananDetail[0]}
+              halaman="detailPesanan"
+              navigator={() => console.log('nothing')}
+            />
           </View>
-        </TouchableOpacity>
+
+          {pesananDetail[0].status === 'selesai' ||
+          pesananDetail[0].status === 'batal' ? null : halaman == 'pesanan' ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('Pesanan')}>
+              <Text style={{color: 'white'}}>Kirim Pesanan</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.button, {backgroundColor: '#ff6666'}]}
+              onPress={() => navigation.navigate('Pesanan')}>
+              <Text style={{color: 'white'}}>Batalkan Pesanan</Text>
+            </TouchableOpacity>
+          )}
         </View>
-     
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Pesanan')}>
-          <Text style={{color: 'white'}}>Kirim Pesanan</Text>
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -47,39 +67,37 @@ export default function DetailPesanan({navigation}) {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#eee',
     height: Dimensions.get('screen').height,
     paddingHorizontal: 10,
   },
   card: {
     backgroundColor: 'white',
     padding: 20,
-    marginVertical: 10,
-    borderRadius: 10,
+    // marginVertical: 10,
+    // borderRadius: 10,
+    height: '100%',
     elevation: 5,
+    flex: 1,
   },
   row: {
     flex: 1,
     flexDirection: 'row',
   },
   images: {
-    backgroundColor: 'rgba(58, 61, 66, 0.1)',
-    height: 80,
-    width: 120,
+    // backgroundColor: 'rgba(58, 61, 66, 0.1)',
+    height: 100,
+    width: 100,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    paddingBottom: 20,
   },
   data: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'column',
     marginHorizontal: 10,
-    justifyContent: 'center',
-  },
-  action: {
-    flexDirection: 'column',
-    marginLeft: 'auto',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   button: {
     backgroundColor: '#0099ff',

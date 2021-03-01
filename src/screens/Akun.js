@@ -11,8 +11,22 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
 import {Images} from '../../assets/images';
+import {useDispatch, useSelector} from 'react-redux';
+import {keluar} from '../redux/actions/auth';
+import ButtonLogin from '../components/ButtonLogin';
 
 export default function Akun({navigation}) {
+  const dispatch = useDispatch();
+  const {isLogin} = useSelector((state)=>state.auth)
+
+  const _onLogout = () =>{
+    dispatch(keluar())
+  }
+
+  if (!isLogin) {
+    return <ButtonLogin navigation={navigation} />;
+  }
+
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity onPress={()=>navigation.navigate('EditAkun')}>
@@ -43,7 +57,7 @@ export default function Akun({navigation}) {
           <Text style={{fontWeight: 'bold'}}>Alamat</Text>
           <Text>Jl. asdsauisadhuiasduiuiadsb</Text>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={_onLogout}>
             <Text style={{color:'white'}}>Logout</Text>
         </TouchableOpacity>
     </ScrollView>

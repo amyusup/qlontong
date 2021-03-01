@@ -10,73 +10,108 @@ import {
   Image,
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
+import {imageURI} from '../../utils';
+import {useDispatch, useSelector} from 'react-redux';
+import {hapusKeranjang} from '../../redux/actions/keranjang';
+import {tambahPesanan} from '../../redux/actions/pesanan';
 
 export default function CardPesanan(props) {
-  const {navigator} = props;
+  const {item, halaman, navigator} = props;
+  const dispatch = useDispatch();
+  const {token} = useSelector((state) => state.auth);
+  const _hapusKeranjang = () => {
+    dispatch(hapusKeranjang(token, item.id));
+  };
+  const _tambahPesanan = async () => {
+    await dispatch(
+      tambahPesanan(token, {
+        id_penjual: item.id_penjual,
+        id_produk: item.id_produk,
+        qyt: item.qyt,
+      }),
+    );
+    await dispatch(hapusKeranjang(token, item.id));
+  };
   return (
-    <View style={styles.container}>
-      <ScrollView style={{marginBottom: 100, marginTop: 10}}>
-        <TouchableOpacity
-          style={styles.card}
-          activeOpacity={0.8}
-          onPress={navigator}>
-          <View
-            style={[
-              styles.row,
-              {justifyContent: 'space-between', marginBottom: 10},
-            ]}>
-            <Text style={{fontWeight: 'bold'}}>Beli1</Text>
-
-            <Text style={{color: '#0099ff', fontWeight: 'bold'}}>Dikemas</Text>
-          </View>
-          <View style={styles.row}>
-            <View style={styles.images}>
-              <Text>gambar</Text>
-            </View>
-            <View style={styles.data}>
-              <Text style={{fontWeight: 'bold'}}>Minyak</Text>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text>40</Text>
-                <Text>Rp. 10.000</Text>
-              </View>
-            </View>
-          </View>
-          <Text style={{textAlign: 'center', marginTop: 10, color: 'gray'}}>
-            dan 2 produk lainnya <Icons name="arrow-down" />
+    <TouchableOpacity
+      style={styles.card}
+      activeOpacity={0.8}
+      onPress={navigator}
+      >
+      <View
+        style={[
+          styles.row,
+          {justifyContent: 'space-between', marginBottom: 10},
+        ]}>
+        <Text style={{fontWeight: 'bold'}}>{item.nama_penjual}</Text>
+        {halaman == 'keranjang' ? null : (
+          <Text
+            style={{
+              color: '#0099ff',
+              fontWeight: 'bold',
+              textTransform: 'capitalize',
+            }}>
+            {item.status}
           </Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
+        )}
+      </View>
+      <View style={styles.row}>
+        <View style={styles.images}>
+          {/* <Text>gambar</Text> */}
+          <Image
+            source={{uri: imageURI + item.foto_produk}}
+            style={styles.images}
+          />
+        </View>
+        <View style={styles.data}>
+          <Text style={{fontWeight: 'bold'}}>{item.nama_produk}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text>{item.qyt} x</Text>
+            <Text>Rp. {item.harga_produk}</Text>
+          </View>
+        </View>
+      </View>
+      {halaman == 'keranjang' ? (
+        <>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.8}
+            onPress={_hapusKeranjang}>
+            <Text style={{color: 'white'}}>Hapus</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#0099ff', marginTop: 10}]}
+            activeOpacity={0.8}
+            onPress={_tambahPesanan}>
+            <Text style={{color: 'white'}}>Bayar</Text>
+          </TouchableOpacity>
+        </>
+      ) : null}
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // marginTop: 20,
-    paddingTop: 10,
-    backgroundColor: 'white',
-    height: Dimensions.get('screen').height,
-    paddingHorizontal: 10,
-  },
   card: {
     backgroundColor: 'white',
     padding: 20,
     marginVertical: 10,
     borderRadius: 10,
     elevation: 5,
+    flex: 1,
   },
   row: {
     flex: 1,
     flexDirection: 'row',
   },
   images: {
-    backgroundColor: 'rgba(58, 61, 66, 0.1)',
-    height: 80,
-    // width: 120,
+    // backgroundColor: 'rgba(58, 61, 66, 0.1)',
+    height: 100,
+    width: 100,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    paddingBottom: 20,
   },
   data: {
     flex: 2,
@@ -90,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#0099ff',
+    backgroundColor: '#ff6666',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',

@@ -9,6 +9,7 @@ import InputBorderedBottom from '../components/InputBorderedBottom';
 export default function Beranda({navigation}) {
   const dispatch = useDispatch();
   const {produk} = useSelector((state) => state.produk);
+
   const [nama, setNama] = React.useState('');
   const [limit, setLimit] = React.useState(25);
   const [orderby, setOrderby] = React.useState('tanggal_input DESC');
@@ -23,7 +24,15 @@ export default function Beranda({navigation}) {
   const renderItem = ({item}) => {
     return (
       <View style={styles.content}>
-        <Card foto={item.foto} nama={item.nama} harga={item.harga} />
+        <Card item={item} />
+      </View>
+    );
+  };
+
+  const empty = () => {
+    return (
+      <View style={{alignItems: 'center', marginTop: 200}}>
+        <Text>Belum ada produk</Text>
       </View>
     );
   };
@@ -32,6 +41,7 @@ export default function Beranda({navigation}) {
     setLimit(limit + 25);
     setRefresh(true);
   };
+ 
 
   const TabKonten = () => (
     <View style={styles.container}>
@@ -41,8 +51,9 @@ export default function Beranda({navigation}) {
         keyExtractor={(item, index) => index.toString()}
         style={styles.wrap}
         numColumns={2}
-        onEndReached={_handleLoadMore}
-        onEndReachedThreshold={0.001}
+        ListEmptyComponent={empty}
+        // onEndReached={_handleLoadMore}
+        // onEndReachedThreshold={0.001}
         // refreshing={refresh}
         // initialNumToRender={25}
       />
@@ -56,7 +67,7 @@ export default function Beranda({navigation}) {
 
   React.useEffect(() => {
     dispatch(getProduk(nama, limit, orderby));
-    console.log(limit);
+    // console.log(limit);
   }, [orderby, nama, limit]);
 
   const _onPress = (key) => {
@@ -77,7 +88,7 @@ export default function Beranda({navigation}) {
           placeholder="Cari produk..."
           value={nama}
           onChange={(text) => setNama(text)}
-          style={{marginVertical: 10}}
+          // style={{marginVertical: 10}}
           returnKeyType="send"
         />
       </View>
@@ -106,10 +117,10 @@ export default function Beranda({navigation}) {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#eee',
     height: Dimensions.get('screen').height,
     paddingHorizontal: 10,
   },
-  wrap: {flexDirection: 'column', marginBottom: 300},
+  wrap: {flexDirection: 'column', marginBottom: 280},
   content: {marginHorizontal: 5},
 });

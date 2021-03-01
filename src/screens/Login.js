@@ -8,11 +8,33 @@ import {
   ScrollView,
 } from 'react-native';
 import InputBorderedBottom from '../components/InputBorderedBottom';
+import {useDispatch, useSelector} from 'react-redux';
+import {login} from '../redux/actions/auth';
+import Akun from './Akun';
 
-export default function Masuk({navigation}) {
+export default function Login({navigation}) {
+  const dispatch = useDispatch();
+  const {isLogin, role} = useSelector((state) => state.auth);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const inputPassword = React.useRef();
+
+  const _onSubmit = () => {
+    dispatch(login({email, password}));
+  };
+  React.useEffect(()=>{
+    if (isLogin) {
+      role == 'penjual'
+        ? navigation.navigate('Penjual', {screen: 'Akun'})
+        : navigation.navigate('Pembeli', {screen: 'Akun'});
+    }
+  },[isLogin])
+
+  // if (isLogin) {
+  //   role == 'penjual'
+  //     ? navigation.navigate('Penjual', {screen: 'Akun'})
+  //     : navigation.navigate('Akun');
+  // }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.loginCard}>
@@ -40,11 +62,14 @@ export default function Masuk({navigation}) {
           style={{marginVertical: 10}}
         />
 
-        <TouchableOpacity style={[styles.button, {backgroundColor: '#0099ff'}]}>
+        <TouchableOpacity
+          style={[styles.button, {backgroundColor: '#0099ff'}]}
+          onPress={_onSubmit}>
           <Text style={{color: 'white'}}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, {backgroundColor: '#eee'}]}
-        onPress={()=>navigation.navigate('Daftar')}>
+        <TouchableOpacity
+          style={[styles.button, {backgroundColor: '#eee'}]}
+          onPress={() => navigation.navigate('Daftar')}>
           <Text style={{color: 'black'}}>Daftar</Text>
         </TouchableOpacity>
       </View>
@@ -54,7 +79,7 @@ export default function Masuk({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    // marginTop: 20,
     paddingTop: 10,
     backgroundColor: 'white',
     height: Dimensions.get('screen').height,
@@ -67,8 +92,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '95%',
     marginTop: 70,
-    marginVertical:10,
-    marginHorizontal:10,
+    marginVertical: 10,
+    marginHorizontal: 10,
     alignItems: 'center',
   },
   title: {

@@ -1,23 +1,29 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {imageURI} from '../../utils';
+import {useDispatch, useSelector} from 'react-redux';
+import {tambahKeranjang} from '../../redux/actions/keranjang';
 
 export default function Card(props) {
-  const {foto, nama, harga} = props;
+  const {item} = props;
+  const dispatch = useDispatch();
+  const {token} = useSelector((state) => state.auth);
+  const _tambahKeranjang = () => {
+    const id_penjual = item.id_penjual
+    const id_produk = item.id
+    dispatch(tambahKeranjang(token, {id_penjual, id_produk}));
+  };
   return (
     <View>
       <View style={styles.card}>
         <View style={styles.imagesWrap}>
-          <Image
-            source={{uri: imageURI + foto}}
-            style={styles.images}
-          />
+          <Image source={{uri: imageURI + item.foto}} style={styles.images} />
         </View>
         <View style={styles.data}>
-          <Text style={{fontWeight: 'bold'}}>{nama}</Text>
-          <Text>{harga}</Text>
+          <Text style={{fontWeight: 'bold'}}>{item.nama}</Text>
+          <Text>{item.harga}</Text>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={_tambahKeranjang}>
           <Text style={{color: 'white'}}>Beli</Text>
         </TouchableOpacity>
       </View>
@@ -45,7 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 4,
   },
-  images:{
+  images: {
     height: '120%',
     width: '100%',
     resizeMode: 'stretch',

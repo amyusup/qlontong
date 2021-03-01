@@ -76,6 +76,11 @@ export const StackPenjual = () => {
         component={TabPenjual}
         options={{title: 'QLontong Penjual'}}
       />
+      <Stack.Screen
+        name="Pembeli"
+        component={TabPembeli}
+        options={{title: 'QLontong'}}
+      />
       <Stack.Screen name="TambahProduk" component={TambahProduk} />
       <Stack.Screen name="EditProduk" component={EditProduk} />
       <Stack.Screen name="EditAkun" component={EditAkun} />
@@ -83,12 +88,12 @@ export const StackPenjual = () => {
       <Stack.Screen
         name="Login"
         component={Login}
-        options={{headerShown: false}}
+        // options={{headerShown: false}}
       />
       <Stack.Screen
         name="Daftar"
         component={Daftar}
-        options={{headerShown: false}}
+        // options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
@@ -162,12 +167,12 @@ export const StackPembeli = () => {
       <Stack.Screen
         name="Login"
         component={Login}
-        options={{headerShown: false}}
+        // options={{headerShown: false}}
       />
       <Stack.Screen
         name="Daftar"
         component={Daftar}
-        options={{headerShown: false}}
+        // options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

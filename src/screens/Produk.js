@@ -10,8 +10,13 @@ import {
   Image,
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
+import {useSelector} from 'react-redux';
 
 export default function Produk({navigation}) {
+  const {isLogin} = useSelector((state) => state.auth);
+  if (!isLogin) {
+    return <ButtonLogin navigation={navigation} />;
+  }
   return (
     <View style={styles.container}>
       <TouchableOpacity

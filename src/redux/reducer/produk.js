@@ -2,7 +2,6 @@ import {GET_PRODUK} from '../type/produk';
 
 const initialState = {
   produk: [],
-  orderby:''
 };
 
 export default (state = initialState, action) => {

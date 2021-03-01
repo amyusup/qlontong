@@ -8,6 +8,6 @@ export const getProduk = (nama="", limit=25, orderby="tanggal_input") => async (
         dispatch({type: GET_PRODUK, payload: res.data.data});
     }catch(e){
         console.log(e)
-        dispatch({type: GET_PRODUK, payload: e});
+        dispatch({type: GET_PRODUK, payload: null});
     }
   };
