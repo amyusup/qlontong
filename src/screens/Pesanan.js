@@ -1,14 +1,16 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions, Text} from 'react-native';
+import {View, StyleSheet, Dimensions, Text, FlatList} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import CardPesanan from '../components/CardPesanan';
 import {useDispatch, useSelector} from 'react-redux';
-import {getPesanan} from '../redux/actions/pesanan';
+import {getPesanan, getPesananDetail} from '../redux/actions/pesanan';
+import ButtonLogin from '../components/ButtonLogin';
 
 export default function Pesanan({navigation}) {
   const dispatch = useDispatch();
   const {pesanan} = useSelector((state) => state.pesanan);
   const {isLogin, token} = useSelector((state) => state.auth);
+  const [status, setStatus] = React.useState('dikemas');
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'dikemas', title: 'Dikemas'},
@@ -18,8 +20,26 @@ export default function Pesanan({navigation}) {
   ]);
   const initialLayout = {width: Dimensions.get('window').width};
 
+  const _beforeRenderDetail = async(kode) =>{
+    // await dispatch(getPesananDetail(token, kode))
+    navigation.navigate('DetailPesanan',{kode, halaman:'Pesanan'})
+  }
   const renderItem = ({item}) => {
-    return <CardPesanan item={item} halaman="pesananSaya" />;
+    return (
+      <CardPesanan
+        item={item}
+        halaman="pesananSaya"
+        navigator={()=>_beforeRenderDetail(item.kode_pesanan)}
+      />
+    );
+  };
+
+  const empty = () => {
+    return (
+      <View style={{alignItems: 'center', marginTop: 200}}>
+        <Text>Belum ada produk di yang dipesan</Text>
+      </View>
+    );
   };
 
   const TabKonten = () => (
@@ -29,6 +49,7 @@ export default function Pesanan({navigation}) {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         style={styles.wrap}
+        ListEmptyComponent={empty}
       />
     </View>
   );
@@ -41,9 +62,21 @@ export default function Pesanan({navigation}) {
   });
 
   React.useEffect(() => {
-    dispatch(getPesanan(token));
+    dispatch(getPesanan(token, status));
     // console.log(limit);
-  }, []);
+  }, [status, token, dispatch]);
+
+  const _onPress = (key) => {
+    if (key === 'dikemas') {
+      setStatus('dikemas');
+    } else if (key === 'dikirim') {
+      setStatus('dikirim');
+    } else if (key === 'selesai') {
+      setStatus('selesai');
+    } else if (key === 'batal') {
+      setStatus('batal');
+    }
+  };
 
   if (!isLogin) {
     return <ButtonLogin navigation={navigation} />;
@@ -58,6 +91,7 @@ export default function Pesanan({navigation}) {
         <TabBar
           {...props}
           style={{backgroundColor: 'white'}}
+          onTabPress={({route}) => _onPress(route.key)}
           renderLabel={({route}) => (
             <Text style={{color: 'black'}}>{route.title}</Text>
           )}
@@ -71,5 +105,11 @@ export default function Pesanan({navigation}) {
 const styles = StyleSheet.create({
   scene: {
     flex: 1,
+  },
+  container: {
+    paddingTop: 10,
+    backgroundColor: 'white',
+    height: Dimensions.get('screen').height,
+    paddingHorizontal: 10,
   },
 });

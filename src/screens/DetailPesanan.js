@@ -11,6 +11,7 @@ import {
 
 import {useDispatch, useSelector} from 'react-redux';
 import {getPesananDetail, ubahPesanan} from '../redux/actions/pesanan';
+import {ubahSaldo} from '../redux/actions/pengguna';
 import {imageURI} from '../utils';
 import CardPesanan from '../components/CardPesanan';
 
@@ -24,13 +25,18 @@ export default function DetailPesanan({navigation, route}) {
   });
   const batal = () => {
     dispatch(ubahPesanan(token, {status: 'batal'}, kode));
-    navigation.goBack()
+    navigation.navigate(halaman);
   };
   const kirim = () => {
     dispatch(ubahPesanan(token, {status: 'dikirim'}, kode));
+    navigation.navigate(halaman);
   };
-  const selesai = () => {
-    dispatch(ubahPesanan(token, {status: 'selesai'}, kode));
+  const selesai = async () => {
+    await dispatch(ubahPesanan(token, {status: 'selesai'}, kode));
+    const saldo = pesananDetail.harga_produk * pesananDetail.qyt;
+    await dispatch(ubahSaldo(token, {saldo}, pesananDetail.id_pembeli));
+    await dispatch(ubahSaldo(token, {saldo}, pesananDetail.id_penjual));
+    navigation.navigate(halaman);
   };
   return (
     <View style={styles.container}>
@@ -52,16 +58,38 @@ export default function DetailPesanan({navigation, route}) {
               halaman="detailPesanan"
               navigator={() => console.log('nothing')}
             />
+            <Text style={styles.total}>
+              Total : {pesananDetail.harga_produk * pesananDetail.qyt}
+            </Text>
           </View>
 
           {pesananDetail.status === 'selesai' ||
           pesananDetail.status === 'batal' ? null : halaman == 'pesanan' ? (
-            <TouchableOpacity style={styles.button} onPress={kirim}>
-              <Text style={{color: 'white'}}>Kirim Pesanan</Text>
-            </TouchableOpacity>
+            pesananDetail.status == 'dikemas' ? (
+              <>
+                <TouchableOpacity
+                  style={[styles.button, {marginBottom: 10}]}
+                  onPress={kirim}>
+                  <Text style={{color: 'white'}}>Kirim Pesanan</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button, {backgroundColor: '#ff6666'}]}
+                  onPress={batal}>
+                  <Text style={{color: 'white'}}>Batalkan Pesanan</Text>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: '#ff6666'}]}
+                onPress={batal}>
+                <Text style={{color: 'white'}}>Batalkan Pesanan</Text>
+              </TouchableOpacity>
+            )
           ) : pesananDetail.status === 'dikirim' ? (
             <>
-              <TouchableOpacity style={[styles.button,{marginBottom:10}]} onPress={selesai}>
+              <TouchableOpacity
+                style={[styles.button, {marginBottom: 10}]}
+                onPress={selesai}>
                 <Text style={{color: 'white'}}>Selesai</Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -86,7 +114,7 @@ export default function DetailPesanan({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
-    backgroundColor: '#eee',
+    backgroundColor: 'white',
     height: Dimensions.get('screen').height,
     paddingHorizontal: 10,
   },
@@ -125,5 +153,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     width: '100%',
+  },
+  total: {
+    textAlign: 'right',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#0099ff',
   },
 });

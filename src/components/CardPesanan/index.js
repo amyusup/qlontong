@@ -34,8 +34,8 @@ export default function CardPesanan(props) {
       );
     } else {
       await dispatch(hapusKeranjang(token, item.id));
-      const saldo = pengguna.saldo - item.qyt * item.harga_produk;
-      await dispatch(ubahPengguna(token, {saldo}));
+      // const saldo = pengguna.saldo - item.qyt * item.harga_produk;
+      // await dispatch(ubahPengguna(token, {saldo}));
 
       dispatch(
         tambahPesanan(token, {

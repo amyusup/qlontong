@@ -22,7 +22,7 @@ export default function PesananSaya({navigation}) {
 
   const _beforeRenderDetail = async(kode) =>{
     // await dispatch(getPesananDetail(token, kode))
-    navigation.navigate('DetailPesanan',{kode, halaman:'pesananSaya'})
+    navigation.navigate('DetailPesanan',{kode, halaman:'PesananSaya'})
   }
   const renderItem = ({item}) => {
     return (

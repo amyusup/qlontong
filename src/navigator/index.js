@@ -129,7 +129,7 @@ export const TabPembeli = () => {
         }}
       />
       <Tab.Screen
-        name="Pesanan Saya"
+        name="PesananSaya"
         component={PesananSaya}
         options={{
           tabBarIcon: ({focused}) =>
