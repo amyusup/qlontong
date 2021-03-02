@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {getPesananDetail} from '../redux/actions/pesanan';
+import {getPesananDetail, ubahPesanan} from '../redux/actions/pesanan';
 import {imageURI} from '../utils';
 import CardPesanan from '../components/CardPesanan';
 
@@ -22,39 +22,58 @@ export default function DetailPesanan({navigation, route}) {
   React.useState(() => {
     dispatch(getPesananDetail(token, kode));
   });
+  const batal = () => {
+    dispatch(ubahPesanan(token, {status: 'batal'}, kode));
+    navigation.goBack()
+  };
+  const kirim = () => {
+    dispatch(ubahPesanan(token, {status: 'dikirim'}, kode));
+  };
+  const selesai = () => {
+    dispatch(ubahPesanan(token, {status: 'selesai'}, kode));
+  };
   return (
     <View style={styles.container}>
       <ScrollView style={{marginBottom: 100, marginTop: 10}}>
         <View style={styles.card}>
           <View style={[styles.row, {justifyContent: 'space-between'}]}>
             <Text style={{fontWeight: 'bold'}}>
-              {pesananDetail[0].nama_penjual}
+              {pesananDetail.nama_penjual}
             </Text>
             <Text style={{fontWeight: 'bold'}}>
-              #{pesananDetail[0].kode_pesanan}
+              #{pesananDetail.kode_pesanan}
             </Text>
           </View>
-          <Text>+62 {pesananDetail[0].no_hp}</Text>
-          <Text>{pesananDetail[0].alamat}</Text>
+          <Text>+62 {pesananDetail.no_hp}</Text>
+          <Text>{pesananDetail.alamat}</Text>
           <View style={{marginVertical: 50}}>
             <CardPesanan
-              item={pesananDetail[0]}
+              item={pesananDetail}
               halaman="detailPesanan"
               navigator={() => console.log('nothing')}
             />
           </View>
 
-          {pesananDetail[0].status === 'selesai' ||
-          pesananDetail[0].status === 'batal' ? null : halaman == 'pesanan' ? (
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Pesanan')}>
+          {pesananDetail.status === 'selesai' ||
+          pesananDetail.status === 'batal' ? null : halaman == 'pesanan' ? (
+            <TouchableOpacity style={styles.button} onPress={kirim}>
               <Text style={{color: 'white'}}>Kirim Pesanan</Text>
             </TouchableOpacity>
+          ) : pesananDetail.status === 'dikirim' ? (
+            <>
+              <TouchableOpacity style={[styles.button,{marginBottom:10}]} onPress={selesai}>
+                <Text style={{color: 'white'}}>Selesai</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: '#ff6666'}]}
+                onPress={batal}>
+                <Text style={{color: 'white'}}>Batalkan Pesanan</Text>
+              </TouchableOpacity>
+            </>
           ) : (
             <TouchableOpacity
               style={[styles.button, {backgroundColor: '#ff6666'}]}
-              onPress={() => navigation.navigate('Pesanan')}>
+              onPress={batal}>
               <Text style={{color: 'white'}}>Batalkan Pesanan</Text>
             </TouchableOpacity>
           )}

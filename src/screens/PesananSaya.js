@@ -4,6 +4,7 @@ import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import CardPesanan from '../components/CardPesanan';
 import {useDispatch, useSelector} from 'react-redux';
 import {getPesanan, getPesananDetail} from '../redux/actions/pesanan';
+import ButtonLogin from '../components/ButtonLogin';
 
 export default function PesananSaya({navigation}) {
   const dispatch = useDispatch();
@@ -104,5 +105,11 @@ export default function PesananSaya({navigation}) {
 const styles = StyleSheet.create({
   scene: {
     flex: 1,
+  },
+  container: {
+    paddingTop: 10,
+    backgroundColor: 'white',
+    height: Dimensions.get('screen').height,
+    paddingHorizontal: 10,
   },
 });

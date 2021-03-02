@@ -1,9 +1,14 @@
-import {GET_PESANAN, TAMBAH_PESANAN, GET_PESANAN_DETAIL} from '../type/pesanan';
+import {
+  GET_PESANAN,
+  TAMBAH_PESANAN,
+  GET_PESANAN_DETAIL,
+  UBAH_PESANAN,
+} from '../type/pesanan';
 
 const initialState = {
   pesanan: [],
   pesananDetail: [],
-  message:''
+  message: '',
 };
 
 export default (state = initialState, action) => {
@@ -21,7 +26,12 @@ export default (state = initialState, action) => {
     case TAMBAH_PESANAN:
       return {
         ...state,
-        pesanan: action.payload,
+        message: action.payload,
+      };
+    case UBAH_PESANAN:
+      return {
+        ...state,
+        message: action.payload,
       };
     default:
       return state;

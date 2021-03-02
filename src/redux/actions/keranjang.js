@@ -1,7 +1,7 @@
 import {
   GET_KERANJANG,
   TAMBAH_KERANJANG,
-  HAPUS_KERANJANG,
+  HAPUS_KERANJANG
 } from '../type/keranjang';
 import axios from 'axios';
 import {URI} from '../../utils';

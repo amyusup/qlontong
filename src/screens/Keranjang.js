@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: Dimensions.get('screen').height,
     paddingHorizontal: 10,
-    backgroundColor: '#eee',
+    
   },
 });

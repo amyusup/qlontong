@@ -13,7 +13,8 @@ import {
   DetailPesanan,
   PesananSaya,
   Keranjang,
-  Beranda
+  Beranda,
+  Topup
 } from '../screens';
 import Icons from 'react-native-vector-icons/Feather';
 
@@ -161,18 +162,20 @@ export const StackPembeli = () => {
       <Stack.Screen
         name="Pembeli"
         component={TabPembeli}
-        options={{title: 'QLontong'}}
+        options={{title: 'QLontong', headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}}
       />
-      <Stack.Screen name="DetailPesanan" component={DetailPesanan} />
+      <Stack.Screen name="DetailPesanan" component={DetailPesanan} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}}/>
+      <Stack.Screen name="EditAkun" component={EditAkun} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}} />
+      <Stack.Screen name="Topup" component={Topup} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}} />
       <Stack.Screen
         name="Login"
         component={Login}
-        // options={{headerShown: false}}
+        options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}}
       />
       <Stack.Screen
         name="Daftar"
         component={Daftar}
-        // options={{headerShown: false}}
+        options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}}
       />
     </Stack.Navigator>
   );

@@ -8,36 +8,49 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  ToastAndroid,
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
 import {imageURI} from '../../utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {hapusKeranjang} from '../../redux/actions/keranjang';
 import {tambahPesanan} from '../../redux/actions/pesanan';
+import {ubahPengguna} from '../../redux/actions/pengguna';
 
 export default function CardPesanan(props) {
   const {item, halaman, navigator} = props;
   const dispatch = useDispatch();
   const {token} = useSelector((state) => state.auth);
+  const {pengguna} = useSelector((state) => state.pengguna);
   const _hapusKeranjang = () => {
     dispatch(hapusKeranjang(token, item.id));
   };
   const _tambahPesanan = async () => {
-    await dispatch(
-      tambahPesanan(token, {
-        id_penjual: item.id_penjual,
-        id_produk: item.id_produk,
-        qyt: item.qyt,
-      }),
-    );
-    await dispatch(hapusKeranjang(token, item.id));
+    console.log(item.qyt * item.harga_produk);
+    if (pengguna.saldo <= item.qyt * item.harga_produk) {
+      ToastAndroid.show(
+        'Saldo tidak mencukupi, harap isi ulang saldo anda',
+        ToastAndroid.SHORT,
+      );
+    } else {
+      await dispatch(hapusKeranjang(token, item.id));
+      const saldo = pengguna.saldo - item.qyt * item.harga_produk;
+      await dispatch(ubahPengguna(token, {saldo}));
+
+      dispatch(
+        tambahPesanan(token, {
+          id_penjual: item.id_penjual,
+          id_produk: item.id_produk,
+          qyt: item.qyt,
+        }),
+      );
+    }
   };
   return (
     <TouchableOpacity
       style={styles.card}
       activeOpacity={0.8}
-      onPress={navigator}
-      >
+      onPress={navigator}>
       <View
         style={[
           styles.row,

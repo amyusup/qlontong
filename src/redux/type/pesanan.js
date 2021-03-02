@@ -1,3 +1,4 @@
 export const GET_PESANAN = 'GET_PESANAN';
 export const GET_PESANAN_DETAIL = 'GET_PESANAN_DETAIL';
+export const UBAH_PESANAN = 'UBAH_PESANAN';
 export const TAMBAH_PESANAN = 'TAMBAH_PESANAN';

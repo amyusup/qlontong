@@ -117,7 +117,7 @@ export default function Beranda({navigation}) {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
-    backgroundColor: '#eee',
+    backgroundColor: 'white',
     height: Dimensions.get('screen').height,
     paddingHorizontal: 10,
   },

@@ -14,6 +14,7 @@ const App = () => {
       <StatusBar translucent backgroundColor="white" barStyle="dark-content" />
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+        <StatusBar backgroundColor="#0099ff" barStyle="light-content" />
           <MainNavigator />
         </PersistGate>
       </Provider>
