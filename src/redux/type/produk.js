@@ -1,1 +1,5 @@
 export const GET_PRODUK = 'GET_PRODUK';
+export const GET_PRODUK_DETAIL = 'GET_PRODUK_DETAIL';
+export const TAMBAH_PRODUK = 'TAMBAH_PRODUK';
+export const UBAH_PRODUK = 'UBAH_PRODUK';
+export const HAPUS_PRODUK = 'HAPUS_PRODUK';

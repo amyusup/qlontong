@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     width: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
+    // flex: 1,
     paddingBottom: 20,
   },
   data: {

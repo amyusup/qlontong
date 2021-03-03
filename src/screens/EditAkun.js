@@ -43,7 +43,7 @@ export default function EditAkun({navigation}) {
     formData.append('alamat', alamat);
     formData.append('foto', foto);
     dispatch(ubahPengguna(token, formData));
-    navigation.goBack();
+    navigation.navigate('Akun');
   };
 
   const requestCameraPermission = async () => {
@@ -76,7 +76,9 @@ export default function EditAkun({navigation}) {
       },
       (response) => {
         console.log(response);
-        setVfoto({uri: response.uri});
+        if(!response.didCancel){
+          setVfoto({uri: response.uri});
+        }
         setFoto({
           uri: response.uri,
           name: response.fileName,
@@ -93,7 +95,9 @@ export default function EditAkun({navigation}) {
       },
       (response) => {
         console.log(response);
-        setVfoto({uri: response.uri});
+        if(!response.didCancel){
+          setVfoto({uri: response.uri});
+        }
         setFoto({
           uri: response.uri,
           name: response.fileName,
@@ -200,7 +204,7 @@ export default function EditAkun({navigation}) {
 
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[360, 0]}
+        snapPoints={[300, 0]}
         initialSnap={1}
         callbackNode={fall}
         enabledGestureInteraction

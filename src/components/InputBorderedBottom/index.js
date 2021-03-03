@@ -38,6 +38,7 @@ const index = (props) => {
         style={{
           width: input.secureTextEntry ? '80%' : '100%',
         }}
+        {...input}
       />
 
       {input.secureTextEntry ? (

@@ -75,17 +75,17 @@ export const StackPenjual = () => {
       <Stack.Screen
         name="Penjual"
         component={TabPenjual}
-        options={{title: 'QLontong Penjual'}}
+        options={{title: 'QLontong Penjual',headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}}
       />
       <Stack.Screen
         name="Pembeli"
         component={TabPembeli}
-        options={{title: 'QLontong'}}
+        options={{title: 'QLontong',headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}}
       />
-      <Stack.Screen name="TambahProduk" component={TambahProduk} />
-      <Stack.Screen name="EditProduk" component={EditProduk} />
-      <Stack.Screen name="EditAkun" component={EditAkun} />
-      <Stack.Screen name="DetailPesanan" component={DetailPesanan} />
+      <Stack.Screen name="TambahProduk" component={TambahProduk} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}} />
+      <Stack.Screen name="EditProduk" component={EditProduk} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}} />
+      <Stack.Screen name="EditAkun" component={EditAkun} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}} />
+      <Stack.Screen name="DetailPesanan" component={DetailPesanan} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}} />
       <Stack.Screen
         name="Login"
         component={Login}
