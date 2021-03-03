@@ -20,16 +20,16 @@ export default function PesananSaya({navigation}) {
   ]);
   const initialLayout = {width: Dimensions.get('window').width};
 
-  const _beforeRenderDetail = async(kode) =>{
+  const _beforeRenderDetail = async (kode) => {
     // await dispatch(getPesananDetail(token, kode))
-    navigation.navigate('DetailPesanan',{kode, halaman:'PesananSaya'})
-  }
+    navigation.navigate('DetailPesanan', {kode, halaman: 'PesananSaya'});
+  };
   const renderItem = ({item}) => {
     return (
       <CardPesanan
         item={item}
         halaman="pesananSaya"
-        navigator={()=>_beforeRenderDetail(item.kode_pesanan)}
+        navigator={() => _beforeRenderDetail(item.kode_pesanan)}
       />
     );
   };
@@ -111,5 +111,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: Dimensions.get('screen').height,
     paddingHorizontal: 10,
+  },
+  wrap: {
+    marginBottom: 230,
   },
 });

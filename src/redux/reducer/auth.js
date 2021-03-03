@@ -1,10 +1,11 @@
-import {LOGIN, GET_ROLE, KELUAR, ERROR} from '../type/auth';
+import {LOGIN, GET_ROLE, KELUAR, ERROR, DAFTAR} from '../type/auth';
 
 const initialState = {
   isLogin: false,
   role: '',
   token: '',
-  error:''
+  error:'',
+  message:''
 };
 
 export default (state = initialState, action) => {
@@ -35,6 +36,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         role: action.payload,
+      };
+    case DAFTAR:
+      return {
+        ...state,
+        message: action.payload,
       };
     default:
       return state;

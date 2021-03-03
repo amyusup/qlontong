@@ -1,33 +1,38 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image, Dimensions} from 'react-native';
 import {imageURI} from '../../utils';
+import {Images} from '../../../assets/images'
 import {useDispatch, useSelector} from 'react-redux';
 import {tambahKeranjang} from '../../redux/actions/keranjang';
 
 export default function Card(props) {
-  const {item} = props;
+  const {item, navigation} = props;
   const dispatch = useDispatch();
-  const {token} = useSelector((state) => state.auth);
+  const {token, isLogin} = useSelector((state) => state.auth);
   const _tambahKeranjang = () => {
+    if (!isLogin) {
+      navigation.navigate('Login');
+    } else {
     const id_penjual = item.id_penjual
     const id_produk = item.id
     dispatch(tambahKeranjang(token, {id_penjual, id_produk}));
+    }
   };
   return (
-    <View>
+    <TouchableOpacity onPress={()=>navigation.navigate('DetailBeranda', {id: item.id})} activeOpacity={0.8}>
       <View style={styles.card}>
-        <View style={styles.imagesWrap}>
-          <Image source={{uri: imageURI + item.foto}} style={styles.images} />
-        </View>
+        {/* <View style={styles.imagesWrap}> */}
+          <Image source={item.foto?{uri: imageURI + item.foto}:Images.no_images} style={styles.images} />
+        {/* </View> */}
         <View style={styles.data}>
-          <Text style={{fontWeight: 'bold'}}>{item.nama}</Text>
-          <Text>{item.harga}</Text>
+          <Text style={{fontWeight: 'bold'}}>{item.nama.substring(0,10)}...</Text>
+          <Text>Rp. {item.harga}</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={_tambahKeranjang}>
           <Text style={{color: 'white'}}>Beli</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -38,22 +43,17 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 10,
     elevation: 5,
-    width: '100%',
-    height: 200,
+    width: Dimensions.get('screen').width/2 - 20,
+    height: 250,
     flex: 1,
     flexDirection: 'column',
   },
-  imagesWrap: {
-    backgroundColor: 'rgba(58, 61, 66, 0.1)',
-    height: 120,
-    width: 120,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 4,
-  },
   images: {
-    height: '120%',
+    height: '100%',
     width: '100%',
+    alignItems: 'center',
+    flex: 4,
+    // marginVertical:5,
     resizeMode: 'stretch',
   },
   data: {
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     margin: 10,
     justifyContent: 'center',
+    marginTop:20
   },
   button: {
     backgroundColor: '#0099ff',

@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {hapusKeranjang} from '../../redux/actions/keranjang';
 import {tambahPesanan} from '../../redux/actions/pesanan';
 import {ubahPengguna} from '../../redux/actions/pengguna';
+import { Images } from '../../../assets/images';
 
 export default function CardPesanan(props) {
   const {item, halaman, navigator} = props;
@@ -26,7 +27,7 @@ export default function CardPesanan(props) {
     dispatch(hapusKeranjang(token, item.id));
   };
   const _tambahPesanan = async () => {
-    console.log(item.qyt * item.harga_produk);
+    // console.log(item.qyt * item.harga_produk);
     if (pengguna.saldo <= item.qyt * item.harga_produk) {
       ToastAndroid.show(
         'Saldo tidak mencukupi, harap isi ulang saldo anda',
@@ -69,10 +70,10 @@ export default function CardPesanan(props) {
         )}
       </View>
       <View style={styles.row}>
-        <View style={styles.images}>
+        <View >
           {/* <Text>gambar</Text> */}
           <Image
-            source={{uri: imageURI + item.foto_produk}}
+            source={item.foto_produk?{uri: imageURI + item.foto_produk}:Images.no_images}
             style={styles.images}
           />
         </View>
@@ -119,12 +120,12 @@ const styles = StyleSheet.create({
   },
   images: {
     // backgroundColor: 'rgba(58, 61, 66, 0.1)',
-    height: 100,
+    height: 80,
     width: 100,
     alignItems: 'center',
     justifyContent: 'center',
     // flex: 1,
-    paddingBottom: 20,
+    marginBottom: 10,
   },
   data: {
     flex: 2,

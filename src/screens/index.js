@@ -11,6 +11,7 @@ import PesananSaya from './PesananSaya'
 import Keranjang from './Keranjang'
 import Beranda from './Beranda'
 import Topup from './Topup'
+import DetailBeranda from './DetailBeranda'
 
 export{
     Login,
@@ -25,5 +26,6 @@ export{
     PesananSaya,
     Keranjang,
     Beranda,
-    Topup
+    Topup,
+    DetailBeranda
 }

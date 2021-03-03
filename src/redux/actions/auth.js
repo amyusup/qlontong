@@ -1,4 +1,4 @@
-import {LOGIN, GET_ROLE, KELUAR, ERROR} from '../type/auth';
+import {LOGIN, GET_ROLE, KELUAR, ERROR, DAFTAR} from '../type/auth';
 import axios from 'axios';
 import {URI} from '../../utils';
 import { ToastAndroid } from 'react-native';
@@ -15,6 +15,17 @@ export const login = (data) => async (dispatch) => {
     dispatch({type: LOGIN, payload: res.data.data.token});
   } catch (e) {
     ToastAndroid.show('Email / password salah', ToastAndroid.SHORT)
+    dispatch({type: ERROR, payload: e.message});
+    // console.log(e.response.data.data.message)
+  }
+};
+export const daftar = (data) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${URI}/auth/daftar`, data);
+    ToastAndroid.show('Berhasil mendaftar', ToastAndroid.SHORT)
+    dispatch({type: DAFTAR, payload: res.data.data});
+  } catch (e) {
+    ToastAndroid.show('Email telah digunakan', ToastAndroid.SHORT)
     dispatch({type: ERROR, payload: e.message});
     // console.log(e.response.data.data.message)
   }

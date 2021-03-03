@@ -12,7 +12,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {getPesananDetail, ubahPesanan} from '../redux/actions/pesanan';
 import {ubahSaldo} from '../redux/actions/pengguna';
-import {imageURI} from '../utils';
+import {ubahProduk} from '../redux/actions/produk';
 import CardPesanan from '../components/CardPesanan';
 
 export default function DetailPesanan({navigation, route}) {
@@ -36,6 +36,9 @@ export default function DetailPesanan({navigation, route}) {
     const saldo = pesananDetail.harga_produk * pesananDetail.qyt;
     await dispatch(ubahSaldo(token, {saldo}, pesananDetail.id_pembeli));
     await dispatch(ubahSaldo(token, {saldo}, pesananDetail.id_penjual));
+    const formData = new FormData();
+    formData.append('stok', pesananDetail.stok - pesananDetail.qyt);
+    await dispatch(ubahProduk(token, formData, pesananDetail.id_produk));
     navigation.navigate(halaman);
   };
   return (
@@ -64,7 +67,7 @@ export default function DetailPesanan({navigation, route}) {
           </View>
 
           {pesananDetail.status === 'selesai' ||
-          pesananDetail.status === 'batal' ? null : halaman == 'pesanan' ? (
+          pesananDetail.status === 'batal' ? null : halaman == 'Pesanan' ? (
             pesananDetail.status == 'dikemas' ? (
               <>
                 <TouchableOpacity

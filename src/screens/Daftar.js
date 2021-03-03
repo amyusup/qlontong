@@ -8,28 +8,39 @@ import {
   ScrollView,
 } from 'react-native';
 import InputBorderedBottom from '../components/InputBorderedBottom';
+import {useDispatch} from 'react-redux';
+import {daftar} from '../redux/actions/auth';
 
 export default function Daftar({navigation}) {
+  const dispatch = useDispatch();
+  const [nama, setNama] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const inputEmail = React.useRef();
   const inputPassword = React.useRef();
+
+  const _onSubmit = async () => {
+    await dispatch(daftar({nama, email, password}));
+    // navigation.navigate('Login')
+  };
   return (
     <>
       <ScrollView style={styles.container}>
         <View style={styles.registerCard}>
           <Text style={styles.title}>Daftar</Text>
-     
+
           <InputBorderedBottom
             keyType="next"
-            onSubmit={() => inputPassword.current.focus()}
+            onSubmit={() => inputEmail.current.focus()}
             icon="user"
             placeholder="Nama Lengkap"
-            value={email}
-            onChange={(text) => setEmail(text)}
+            value={nama}
+            onChange={(text) => setNama(text)}
             style={{marginVertical: 10}}
             returnKeyType="send"
           />
           <InputBorderedBottom
+            inputRef={inputEmail}
             keyType="next"
             onSubmit={() => inputPassword.current.focus()}
             icon="mail"
@@ -52,10 +63,17 @@ export default function Daftar({navigation}) {
             style={{marginVertical: 10}}
           />
           <Text>
-            Sudah memiliki akun ? <Text style={{color: '#0099ff'}} onPress={()=>navigation.navigate('Login')}>Masuk</Text>
+            Sudah memiliki akun ?
+            <Text
+              style={{color: '#0099ff'}}
+              onPress={() => navigation.navigate('Login')}>
+              Masuk
+            </Text>
           </Text>
 
-          <TouchableOpacity style={[styles.button, {backgroundColor: '#eee'}]}>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#eee'}]}
+            onPress={_onSubmit}>
             <Text style={{color: 'black'}}>Daftar</Text>
           </TouchableOpacity>
         </View>
@@ -79,8 +97,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '95%',
     marginTop: 50,
-    marginVertical:10,
-    marginHorizontal:10,
+    marginVertical: 10,
+    marginHorizontal: 10,
     alignItems: 'center',
   },
   title: {

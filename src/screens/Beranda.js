@@ -24,7 +24,10 @@ export default function Beranda({navigation}) {
   const renderItem = ({item}) => {
     return (
       <View style={styles.content}>
-        <Card item={item} />
+        <Card
+          item={item}
+          navigation={navigation}
+        />
       </View>
     );
   };
@@ -41,7 +44,6 @@ export default function Beranda({navigation}) {
     setLimit(limit + 25);
     setRefresh(true);
   };
- 
 
   const TabKonten = () => (
     <View style={styles.container}>

@@ -112,4 +112,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('screen').height,
     paddingHorizontal: 10,
   },
+  wrap: {
+    marginBottom: 230,
+  },
 });

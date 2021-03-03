@@ -14,7 +14,8 @@ import {
   PesananSaya,
   Keranjang,
   Beranda,
-  Topup
+  Topup,
+  DetailBeranda
 } from '../screens';
 import Icons from 'react-native-vector-icons/Feather';
 
@@ -164,6 +165,7 @@ export const StackPembeli = () => {
         component={TabPembeli}
         options={{title: 'QLontong', headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}}
       />
+      <Stack.Screen name="DetailBeranda" component={DetailBeranda} options={{title: 'Detail Produk',headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}}/>
       <Stack.Screen name="DetailPesanan" component={DetailPesanan} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}}/>
       <Stack.Screen name="EditAkun" component={EditAkun} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}} />
       <Stack.Screen name="Topup" component={Topup} options={{headerStyle:{backgroundColor:'#0099ff'}, headerTintColor:'white'}} />

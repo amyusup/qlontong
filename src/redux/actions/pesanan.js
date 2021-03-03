@@ -23,8 +23,8 @@ export const getPesanan = (token, status = 'dikemas') => async (dispatch) => {
   }
 };
 export const getPesananDetail = (token, kode) => async (dispatch) => {
-  console.log(kode);
-  console.log(token);
+  // console.log(kode);
+  // console.log(token);
   try {
     const res = await axios.post(`${URI}/pesanan/detail?kode=${kode}`, null, {
       headers: {
